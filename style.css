@@ -93,43 +93,6 @@ main {
   to {opacity: 1;}
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  main {
-    padding: 0.5rem;
-  }
-  header h1 {
-    font-size: 1.5rem;
-  }
-  .card-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.2rem;
-  }
-  /* Ensure activity header wraps fully and times show completely */
-.card-header span {
-  flex: 1 1 auto;
-  white-space: normal;
-  overflow-wrap: break-word;
-}
-
-/* Make card content spacing more consistent */
-.card-content p {
-  margin: 0.3rem 0;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-/* Adjust expanded card content for mobile */
-@media (max-width: 600px) {
-  .card-content p {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
-}
 /* Ensure headers wrap fully and times are visible */
 .card-header span {
   flex: 1 1 auto;
@@ -145,8 +108,19 @@ main {
   flex-wrap: wrap;
 }
 
-/* Mobile adjustments for expanded content */
+/* Mobile adjustments */
 @media (max-width: 600px) {
+  main {
+    padding: 0.5rem;
+  }
+  header h1 {
+    font-size: 1.5rem;
+  }
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
   .card-content p {
     flex-direction: column;
     align-items: flex-start;
