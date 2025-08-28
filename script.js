@@ -1,6 +1,7 @@
+
 const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSt2MSaQY53H0kBw0MRlgJVFE8FG-A0tMBmccKoGPBqvllIA_Mn4B45QQWYu5uZu2_-CZbfifKyOQjl/pub?output=csv";
 
-// Robust CSV parser: handles blank cells, trailing commas, and merges extra columns into last column
+// CSV parser that always aligns with headers, even if cells are missing
 function parseCSV(csvText) {
   const lines = csvText.split("\n").filter(line => line.trim() !== "");
   const headers = lines
@@ -9,16 +10,15 @@ function parseCSV(csvText) {
     .map(h => h.replace(/^"|"$/g, ''));
 
   return lines.map(line => {
-    // Match quoted or unquoted values
-    let values = line.match(/(".*?"|[^",\n]*)(?=,|$)/g) || [];
+    let values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); // split by commas outside quotes
     values = values.map(v => v.replace(/^"|"$/g, '').trim());
 
-    // Pad values to match headers length
+    // Pad with blanks if not enough values
     while (values.length < headers.length) {
       values.push("");
     }
 
-    // If too many values, merge extras into last column (Notes)
+    // If too many values, merge extras into Notes (last column)
     if (values.length > headers.length) {
       values = values
         .slice(0, headers.length - 1)
@@ -27,7 +27,7 @@ function parseCSV(csvText) {
 
     const obj = {};
     headers.forEach((h, i) => {
-      obj[h] = values[i]; // empty string if blank
+      obj[h] = values[i] || "";
     });
     return obj;
   });
@@ -117,12 +117,9 @@ async function populateActivities() {
       <p><strong>Hours:</strong> ${act.Hours || "—"}</p>
     `;
 
-    // Notes handled safely with bold label
+    // Notes handled safely
     const notesPara = document.createElement("p");
-    const notesStrong = document.createElement("strong");
-    notesStrong.textContent = "Notes:";
-    notesPara.appendChild(notesStrong);
-    notesPara.appendChild(document.createTextNode(" " + (act.Notes || "—")));
+    notesPara.textContent = "Notes: " + (act.Notes || "—");
     content.appendChild(notesPara);
 
     card.appendChild(content);
