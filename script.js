@@ -1,24 +1,32 @@
-console.log("Script loaded!");
 const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSt2MSaQY53H0kBw0MRlgJVFE8FG-A0tMBmccKoGPBqvllIA_Mn4B45QQWYu5uZu2_-CZbfifKyOQjl/pub?output=csv";
 
-// Robust CSV parser: handles commas inside fields and merges extra columns into the last one
+// CSV parser that always aligns with headers, even if cells are missing
 function parseCSV(csvText) {
   const lines = csvText.split("\n").filter(line => line.trim() !== "");
-  const headers = lines.shift().split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(h => h.replace(/^"|"$/g, ''));
+  const headers = lines
+    .shift()
+    .split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)
+    .map(h => h.replace(/^"|"$/g, ''));
+
   return lines.map(line => {
-    let values = line.match(/(".*?"|[^",\n]+)(?=,|$)/g) || [];
+    let values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); // split by commas outside quotes
     values = values.map(v => v.replace(/^"|"$/g, '').trim());
 
-    // If there are more values than headers, merge extras into the last column
+    // Pad with blanks if not enough values
+    while (values.length < headers.length) {
+      values.push("");
+    }
+
+    // If too many values, merge extras into Notes (last column)
     if (values.length > headers.length) {
-      const extras = values.slice(headers.length - 1).join(",");
-      values = values.slice(0, headers.length - 1);
-      values.push(extras);
+      values = values
+        .slice(0, headers.length - 1)
+        .concat(values.slice(headers.length - 1).join(","));
     }
 
     const obj = {};
     headers.forEach((h, i) => {
-      obj[h] = values[i] || ""; // Use empty string if blank
+      obj[h] = values[i] || "";
     });
     return obj;
   });
@@ -55,7 +63,10 @@ async function populateDays() {
     const card = document.createElement("div");
     card.className = "card day-card";
     card.innerText = formatHomePageDate(dayData.Day, dayData.Date);
-    card.onclick = () => window.location = `day.html?day=${encodeURIComponent(dayData.Day)}&date=${encodeURIComponent(dayData.Date)}`;
+    card.onclick = () =>
+      (window.location = `day.html?day=${encodeURIComponent(
+        dayData.Day
+      )}&date=${encodeURIComponent(dayData.Date)}`);
     daysContainer.appendChild(card);
   });
 }
@@ -70,10 +81,9 @@ async function populateActivities() {
   const date = getQueryParam("date");
 
   const activities = data.filter(d => d.Day === day && d.Date === date);
-  console.log("Parsed activities for this day:", activities);
 
-
-  document.getElementById("day-title").innerText = formatHomePageDate(day, date) + " Itinerary";
+  document.getElementById("day-title").innerText =
+    formatHomePageDate(day, date) + " Itinerary";
 
   const container = document.getElementById("activities-container");
 
@@ -85,7 +95,9 @@ async function populateActivities() {
     const header = document.createElement("div");
     header.className = "card-header";
     const categoryIcon = getCategoryIcon(act.Category);
-    header.innerHTML = `<span>${categoryIcon} ${act.Activity || "—"}</span><span>${act.Time || "—"}</span>`;
+    header.innerHTML = `<span>${categoryIcon} ${
+      act.Activity || "—"
+    }</span><span>${act.Time || "—"}</span>`;
     card.appendChild(header);
 
     // Expanded content
@@ -95,7 +107,11 @@ async function populateActivities() {
       <p><strong>Category:</strong> ${act.Category || "—"}</p>
       <p><strong>Neighborhood:</strong> ${act.Neighborhood || "—"}</p>
       <p><strong>Address:</strong> ${act.Address || "—"}</p>
-      <p><strong>Website:</strong> ${act.Website ? `<a href="${act.Website}" target="_blank">${act.Website}</a>` : "—"}</p>
+      <p><strong>Website:</strong> ${
+        act.Website
+          ? `<a href="${act.Website}" target="_blank">${act.Website}</a>`
+          : "—"
+      }</p>
       <p><strong>Cost:</strong> ${act.Cost || "—"}</p>
       <p><strong>Ticket:</strong> ${act.Ticket || "—"}</p>
       <p><strong>Hours:</strong> ${act.Hours || "—"}</p>
@@ -111,15 +127,24 @@ async function populateActivities() {
 // Updated category icons
 function getCategoryIcon(category) {
   switch (category?.toLowerCase()) {
-    case "explore": return "🌍";
-    case "activity": return "⚡";
-    case "shopping": return "🛍️";
-    case "museum": return "🏛️";
-    case "food": return "🍴";
-    case "travel": return "✈️";
-    case "lodging": return "🏨";
-    case "to-do": return "✅";
-    default: return "📍";
+    case "explore":
+      return "🌍";
+    case "activity":
+      return "⚡";
+    case "shopping":
+      return "🛍️";
+    case "museum":
+      return "🏛️";
+    case "food":
+      return "🍴";
+    case "travel":
+      return "✈️";
+    case "lodging":
+      return "🏨";
+    case "to-do":
+      return "✅";
+    default:
+      return "📍";
   }
 }
 
