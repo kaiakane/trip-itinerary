@@ -27,7 +27,7 @@ async function populateDays() {
 
   const daysContainer = document.getElementById("days-container");
 
-  // Get unique combinations of Day + Date
+  // Unique Day + Date combinations
   const uniqueDays = Array.from(
     new Map(data.map(d => [`${d.Day}|${d.Date}`, d])).values()
   );
@@ -63,20 +63,20 @@ async function populateActivities() {
     const header = document.createElement("div");
     header.className = "card-header";
     const categoryIcon = getCategoryIcon(act.Category);
-    header.innerHTML = `<span>${categoryIcon} ${act.Activity}</span><span>${act.Time}</span>`;
+    header.innerHTML = `<span>${categoryIcon} ${act.Activity || "—"}</span><span>${act.Time || "—"}</span>`;
     card.appendChild(header);
 
     const content = document.createElement("div");
     content.className = "card-content";
     content.innerHTML = `
-      <p><strong>Category:</strong> ${act.Category}</p>
-      <p><strong>Neighborhood:</strong> ${act.Neighborhood}</p>
-      <p><strong>Address:</strong> ${act.Address}</p>
-      <p><strong>Website:</strong> <a href="${act.Website}" target="_blank">${act.Website}</a></p>
-      <p><strong>Cost:</strong> ${act.Cost}</p>
-      <p><strong>Ticket:</strong> ${act.Ticket}</p>
-      <p><strong>Hours:</strong> ${act.Hours}</p>
-      <p><strong>Notes:</strong> ${act.Notes}</p>
+      <p><strong>Category:</strong> ${act.Category || "—"}</p>
+      <p><strong>Neighborhood:</strong> ${act.Neighborhood || "—"}</p>
+      <p><strong>Address:</strong> ${act.Address || "—"}</p>
+      <p><strong>Website:</strong> ${act.Website ? `<a href="${act.Website}" target="_blank">${act.Website}</a>` : "—"}</p>
+      <p><strong>Cost:</strong> ${act.Cost || "—"}</p>
+      <p><strong>Ticket:</strong> ${act.Ticket || "—"}</p>
+      <p><strong>Hours:</strong> ${act.Hours || "—"}</p>
+      <p><strong>Notes:</strong> ${act.Notes || "—"}</p>
     `;
     card.appendChild(content);
 
