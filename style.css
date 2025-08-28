@@ -126,3 +126,25 @@ main {
     align-items: flex-start;
   }
 }
+/* Preserve line breaks and wrap long text for notes and other fields */
+.card-content p {
+  white-space: pre-wrap;   /* Preserve line breaks from CSV */
+  word-wrap: break-word;   /* Wrap long words instead of overflowing */
+  overflow-wrap: break-word;
+}
+
+/* Optional: add a subtle max-height with scroll for very long notes */
+.card-content {
+  max-height: 1000px; /* high enough not to clip most notes */
+}
+
+/* Optional: make links stand out */
+.card-content a {
+  color: #ff7f50;
+  text-decoration: underline;
+}
+
+/* Small padding tweak for readability */
+.card-content p strong {
+  margin-right: 0.3rem;
+}
