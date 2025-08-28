@@ -1,14 +1,23 @@
 const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSt2MSaQY53H0kBw0MRlgJVFE8FG-A0tMBmccKoGPBqvllIA_Mn4B45QQWYu5uZu2_-CZbfifKyOQjl/pub?output=csv";
 
-// Robust CSV parser handling quoted commas and blank cells
+// Robust CSV parser: handles commas inside fields and merges extra columns into the last one
 function parseCSV(csvText) {
   const lines = csvText.split("\n").filter(line => line.trim() !== "");
   const headers = lines.shift().split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(h => h.replace(/^"|"$/g, ''));
   return lines.map(line => {
-    const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.replace(/^"|"$/g, ''));
+    let values = line.match(/(".*?"|[^",\n]+)(?=,|$)/g) || [];
+    values = values.map(v => v.replace(/^"|"$/g, '').trim());
+
+    // If there are more values than headers, merge extras into the last column
+    if (values.length > headers.length) {
+      const extras = values.slice(headers.length - 1).join(",");
+      values = values.slice(0, headers.length - 1);
+      values.push(extras);
+    }
+
     const obj = {};
     headers.forEach((h, i) => {
-      obj[h] = values[i] || ""; // Use empty string if cell is blank
+      obj[h] = values[i] || ""; // Use empty string if blank
     });
     return obj;
   });
