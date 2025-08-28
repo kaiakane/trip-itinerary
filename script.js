@@ -104,8 +104,6 @@ async function populateActivities() {
     // Expanded content
     const content = document.createElement("div");
     content.className = "card-content";
-
-    // Use safe textContent for Notes to prevent misrendering
     content.innerHTML = `
       <p><strong>Category:</strong> ${act.Category || "—"}</p>
       <p><strong>Neighborhood:</strong> ${act.Neighborhood || "—"}</p>
@@ -118,12 +116,9 @@ async function populateActivities() {
       <p><strong>Hours:</strong> ${act.Hours || "—"}</p>
     `;
 
-    // Append Notes separately using textContent to preserve commas and special characters
+    // Notes handled safely
     const notesPara = document.createElement("p");
-    const notesStrong = document.createElement("strong");
-    notesStrong.textContent = "Notes:";
-    notesPara.appendChild(notesStrong);
-    notesPara.append(" " + (act.Notes || "—"));
+    notesPara.textContent = "Notes: " + (act.Notes || "—");
     content.appendChild(notesPara);
 
     card.appendChild(content);
