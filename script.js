@@ -1,28 +1,25 @@
 const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSt2MSaQY53H0kBw0MRlgJVFE8FG-A0tMBmccKoGPBqvllIA_Mn4B45QQWYu5uZu2_-CZbfifKyOQjl/pub?output=csv";
 
-// CSV parser handling quoted commas
+// Robust CSV parser handling quoted commas and blank cells
 function parseCSV(csvText) {
-  const rows = csvText.trim().split("\n");
-  const headers = rows.shift().split(",");
-  return rows.map(row => {
-    const values = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
-    return headers.reduce((obj, header, i) => {
-      obj[header] = values[i]?.replace(/^"|"$/g, '') || '';
-      return obj;
-    }, {});
+  const lines = csvText.split("\n").filter(line => line.trim() !== "");
+  const headers = lines.shift().split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(h => h.replace(/^"|"$/g, ''));
+  return lines.map(line => {
+    const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.replace(/^"|"$/g, ''));
+    const obj = {};
+    headers.forEach((h, i) => {
+      obj[h] = values[i] || ""; // Use empty string if cell is blank
+    });
+    return obj;
   });
 }
 
-// Format date for homepage: Day, Month Date (e.g., Saturday, September 6th)
-function formatDate(dateStr) {
-  if (!dateStr) return dateStr;
-  const parts = dateStr.split("/");
-  if (parts.length !== 3) return dateStr;
-  const month = parseInt(parts[0], 10) - 1;
-  const day = parseInt(parts[1], 10);
-  const year = parseInt(parts[2], 10);
-  const dateObj = new Date(year, month, day);
-  return dateObj.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+// Concatenate Day and Date for homepage
+function formatHomePageDate(day, date) {
+  if (!day && !date) return "";
+  if (!day) return date;
+  if (!date) return day;
+  return `${day}, ${date}`;
 }
 
 // Get query param
@@ -47,7 +44,7 @@ async function populateDays() {
   uniqueDays.forEach(dayData => {
     const card = document.createElement("div");
     card.className = "card day-card";
-    card.innerText = `${dayData.Day}, ${formatDate(dayData.Date)}`;
+    card.innerText = formatHomePageDate(dayData.Day, dayData.Date);
     card.onclick = () => window.location = `day.html?day=${encodeURIComponent(dayData.Day)}&date=${encodeURIComponent(dayData.Date)}`;
     daysContainer.appendChild(card);
   });
@@ -64,7 +61,7 @@ async function populateActivities() {
 
   const activities = data.filter(d => d.Day === day && d.Date === date);
 
-  document.getElementById("day-title").innerText = `${day}, ${formatDate(date)} Itinerary`;
+  document.getElementById("day-title").innerText = formatHomePageDate(day, date) + " Itinerary";
 
   const container = document.getElementById("activities-container");
 
@@ -72,12 +69,14 @@ async function populateActivities() {
     const card = document.createElement("div");
     card.className = "card";
 
+    // Activity header
     const header = document.createElement("div");
     header.className = "card-header";
     const categoryIcon = getCategoryIcon(act.Category);
     header.innerHTML = `<span>${categoryIcon} ${act.Activity || "—"}</span><span>${act.Time || "—"}</span>`;
     card.appendChild(header);
 
+    // Expanded content
     const content = document.createElement("div");
     content.className = "card-content";
     content.innerHTML = `
@@ -97,7 +96,7 @@ async function populateActivities() {
   });
 }
 
-// Updated category-to-icon mapping
+// Updated category icons
 function getCategoryIcon(category) {
   switch (category?.toLowerCase()) {
     case "explore": return "🌍";
