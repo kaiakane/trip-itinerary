@@ -1,3 +1,4 @@
+console.log("Script loaded!");
 const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSt2MSaQY53H0kBw0MRlgJVFE8FG-A0tMBmccKoGPBqvllIA_Mn4B45QQWYu5uZu2_-CZbfifKyOQjl/pub?output=csv";
 
 // Robust CSV parser: handles commas inside fields and merges extra columns into the last one
