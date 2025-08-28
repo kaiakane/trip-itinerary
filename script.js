@@ -9,7 +9,7 @@ function parseCSV(csvText) {
     .map(h => h.replace(/^"|"$/g, ''));
 
   return lines.map(line => {
-    let values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); // split by commas outside quotes
+    let values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
     values = values.map(v => v.replace(/^"|"$/g, '').trim());
 
     // Pad with blanks if not enough values
@@ -116,9 +116,12 @@ async function populateActivities() {
       <p><strong>Hours:</strong> ${act.Hours || "—"}</p>
     `;
 
-    // Notes handled safely
+    // Notes handled safely with bold label
     const notesPara = document.createElement("p");
-    notesPara.textContent = "Notes: " + (act.Notes || "—");
+    const notesStrong = document.createElement("strong");
+    notesStrong.textContent = "Notes:";
+    notesPara.appendChild(notesStrong);
+    notesPara.appendChild(document.createTextNode(" " + (act.Notes || "—")));
     content.appendChild(notesPara);
 
     card.appendChild(content);
