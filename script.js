@@ -89,7 +89,6 @@ async function populateActivities() {
   const container = document.getElementById("activities-container");
 
   activities.forEach(act => {
-    // Debug: check raw activity object
     console.log("Activity raw:", act);
 
     const card = document.createElement("div");
@@ -106,7 +105,6 @@ async function populateActivities() {
     const content = document.createElement("div");
     content.className = "card-content";
 
-    // Use safe textContent for Notes to prevent misrendering
     content.innerHTML = `
       <p><strong>Category:</strong> ${act.Category || "—"}</p>
       <p><strong>Neighborhood:</strong> ${act.Neighborhood || "—"}</p>
@@ -119,20 +117,22 @@ async function populateActivities() {
       <p><strong>Hours:</strong> ${act.Hours || "—"}</p>
     `;
 
-    // Append Notes separately using textContent to preserve commas and special characters
+    // Notes: safe text node append
     const notesPara = document.createElement("p");
     const notesStrong = document.createElement("strong");
-    notesStrong.textContent = "Notes:";
+    notesStrong.textContent = "Notes: ";
     notesPara.appendChild(notesStrong);
-    notesPara.append(" " + (act.Notes || "—"));
+    notesPara.appendChild(document.createTextNode(act.Notes || "—"));
     content.appendChild(notesPara);
 
     card.appendChild(content);
 
+    // Toggle expanded state
     card.onclick = () => card.classList.toggle("expanded");
     container.appendChild(card);
   });
 }
+
 
 // Updated category icons
 function getCategoryIcon(category) {
