@@ -71,8 +71,7 @@ async function populateDays() {
   });
 }
 
-// Populate activities for a specific day{
-console.log("Activity raw:", act);
+// Populate activities for a specific day
 async function populateActivities() {
   const res = await fetch(csvUrl);
   const text = await res.text();
@@ -89,6 +88,9 @@ async function populateActivities() {
   const container = document.getElementById("activities-container");
 
   activities.forEach(act => {
+    // Debug: check raw activity object
+    console.log("Activity raw:", act);
+
     const card = document.createElement("div");
     card.className = "card";
 
@@ -96,28 +98,34 @@ async function populateActivities() {
     const header = document.createElement("div");
     header.className = "card-header";
     const categoryIcon = getCategoryIcon(act.Category);
-    header.innerHTML = `<span>${categoryIcon} ${
-      act.Activity || "—"
-    }</span><span>${act.Time || "—"}</span>`;
+    header.innerHTML = `<span>${categoryIcon} ${act.Activity || "—"}</span><span>${act.Time || "—"}</span>`;
     card.appendChild(header);
 
     // Expanded content
     const content = document.createElement("div");
     content.className = "card-content";
+
+    // Use safe textContent for Notes to prevent misrendering
     content.innerHTML = `
       <p><strong>Category:</strong> ${act.Category || "—"}</p>
       <p><strong>Neighborhood:</strong> ${act.Neighborhood || "—"}</p>
       <p><strong>Address:</strong> ${act.Address || "—"}</p>
       <p><strong>Website:</strong> ${
-        act.Website
-          ? `<a href="${act.Website}" target="_blank">${act.Website}</a>`
-          : "—"
+        act.Website ? `<a href="${act.Website}" target="_blank">${act.Website}</a>` : "—"
       }</p>
       <p><strong>Cost:</strong> ${act.Cost || "—"}</p>
       <p><strong>Ticket:</strong> ${act.Ticket || "—"}</p>
       <p><strong>Hours:</strong> ${act.Hours || "—"}</p>
-      <p><strong>Notes:</strong> ${act.Notes || "—"}</p>
     `;
+
+    // Append Notes separately using textContent to preserve commas and special characters
+    const notesPara = document.createElement("p");
+    const notesStrong = document.createElement("strong");
+    notesStrong.textContent = "Notes:";
+    notesPara.appendChild(notesStrong);
+    notesPara.append(" " + (act.Notes || "—"));
+    content.appendChild(notesPara);
+
     card.appendChild(content);
 
     card.onclick = () => card.classList.toggle("expanded");
