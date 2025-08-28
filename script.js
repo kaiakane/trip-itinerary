@@ -69,6 +69,8 @@ async function populateActivities() {
   const date = getQueryParam("date");
 
   const activities = data.filter(d => d.Day === day && d.Date === date);
+  console.log("Parsed activities for this day:", activities);
+
 
   document.getElementById("day-title").innerText = formatHomePageDate(day, date) + " Itinerary";
 
