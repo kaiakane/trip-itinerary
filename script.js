@@ -71,7 +71,7 @@ async function populateDays() {
   });
 }
 
-// Populate activities for a specific day
+// Populate activities for a specific day{
 console.log("Activity raw:", act);
 async function populateActivities() {
   const res = await fetch(csvUrl);
