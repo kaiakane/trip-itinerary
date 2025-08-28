@@ -1,6 +1,6 @@
 const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSt2MSaQY53H0kBw0MRlgJVFE8FG-A0tMBmccKoGPBqvllIA_Mn4B45QQWYu5uZu2_-CZbfifKyOQjl/pub?output=csv";
 
-// CSV parser that always aligns with headers, even if cells are missing
+// Robust CSV parser: handles blank cells, trailing commas, and merges extra columns into last column
 function parseCSV(csvText) {
   const lines = csvText.split("\n").filter(line => line.trim() !== "");
   const headers = lines
@@ -9,15 +9,16 @@ function parseCSV(csvText) {
     .map(h => h.replace(/^"|"$/g, ''));
 
   return lines.map(line => {
-    let values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+    // Match quoted or unquoted values
+    let values = line.match(/(".*?"|[^",\n]*)(?=,|$)/g) || [];
     values = values.map(v => v.replace(/^"|"$/g, '').trim());
 
-    // Pad with blanks if not enough values
+    // Pad values to match headers length
     while (values.length < headers.length) {
       values.push("");
     }
 
-    // If too many values, merge extras into Notes (last column)
+    // If too many values, merge extras into last column (Notes)
     if (values.length > headers.length) {
       values = values
         .slice(0, headers.length - 1)
@@ -26,7 +27,7 @@ function parseCSV(csvText) {
 
     const obj = {};
     headers.forEach((h, i) => {
-      obj[h] = values[i] || "";
+      obj[h] = values[i]; // empty string if blank
     });
     return obj;
   });
