@@ -56,6 +56,8 @@ main {
   cursor: pointer;
   text-decoration: none;
   transition: background-color 0.2s ease;
+  font-size: 1.2rem; /* larger than default */
+  padding: 0.75rem 1.5rem; /* optional: slightly bigger clickable area */
 }
 
 .button:hover, .back-button:hover, .link:hover {
