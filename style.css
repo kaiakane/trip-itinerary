@@ -1,6 +1,4 @@
 
-
-
 /* Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=Karla:wght@300;400;600&display=swap');
 
@@ -24,12 +22,20 @@ body {
   background-color: var(--light-bg);
   color: var(--text-dark);
 }
+header {
+  text-align: center;
+  margin: 1rem 0;
+}
 
 header h1 {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  background: var(--pink);
+  color: #fff;
+  border-radius: 12px;
   font-family: 'Baloo 2', cursive;
+  font-size: 1.8rem;
   font-weight: 600;
-  font-size: 2rem;
-  color: var(--pink);
 }
 
 main {
@@ -79,16 +85,15 @@ main {
   font-weight: 600;
   padding: 1.2rem 1rem;
   border-radius: 16px;
-  color: #fff;
+  color: #fff; /* keep text white */
   background: var(--blue);
   box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
 .day-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
   background: var(--orange);
+  color: #fff; /* keep text visible */
 }
 
 
@@ -115,7 +120,15 @@ main {
   background-color: var(--green);
   color: #fff;
 }
+.card-header span {
+  flex: 1;
+}
 
+.card-header .time {
+  margin-left: 0.75rem;
+  font-weight: 400;
+  color: #fefefe;
+}
 /* Expanded content */
 .card-content {
   padding: 1rem;
@@ -173,4 +186,15 @@ main {
 }
 .card-content p.notes {
   padding-left: 0.5rem; /* same as other paragraphs if needed */
+}
+.card-content p {
+  margin: 0.3rem 0;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.card-content p.notes {
+  justify-content: flex-start; /* align with other labels */
+  padding-left: 0; /* remove odd indent */
 }
