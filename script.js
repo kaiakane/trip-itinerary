@@ -129,7 +129,10 @@ async function populateActivities() {
     card.appendChild(content);
 
     // Toggle expanded state
-    card.onclick = () => card.classList.toggle("expanded");
+    card.onclick = (e) => {
+  if (e.target.tagName.toLowerCase() === "a") return; // let link work
+  card.classList.toggle("expanded");
+};
     container.appendChild(card);
   });
 }
