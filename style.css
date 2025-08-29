@@ -1,3 +1,4 @@
+
 /* Fonts */
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
@@ -75,21 +76,13 @@ main {
   overflow-wrap: break-word;
 }
 
-/* Only apply flex layout to all fields except the last one (Notes) */
-.card-content p:not(:last-child) {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+.card-content {
+  margin-top: 0.5rem;
+  display: none;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #555;
 }
-
-/* Ensure the last <p> (Notes) displays normally */
-.card-content p:last-child {
-  display: block;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  margin: 0.3rem 0;
-}
-
 
 .card.expanded .card-content {
   display: block;
