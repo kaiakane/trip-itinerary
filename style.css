@@ -272,3 +272,29 @@ main {
     align-items: flex-start;
   }
 }
+.card-header {
+  background: linear-gradient(120deg, #ffbb88, #ffd3b6);
+  border-bottom: 2px solid #ff9a5b; /* subtle accent border */
+  color: #222; /* slightly darker text for contrast */
+}
+.day-card {
+  border: 2px solid #ff9a5b;
+  background-color: #fff3e6;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  font-size: 1.3rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.day-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+.card-content a {
+  color: #ff6a3d;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.card-content a:hover {
+  text-decoration: underline;
+}
