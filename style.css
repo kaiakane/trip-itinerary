@@ -239,10 +239,11 @@ main {
 
 /* Card content paragraphs */
 .card-content p {
-  margin: 0.3rem 0;
-  white-space: pre-wrap;   /* preserve line breaks from CSV */
-  word-wrap: break-word;   /* wrap long words */
+   margin: 0.3rem 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
   overflow-wrap: break-word;
+  display: block; /* important to avoid flex hiding Notes */
 }
 
 /* Strong labels inside card content */
