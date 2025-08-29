@@ -89,10 +89,61 @@ async function populateActivities() {
   const container = document.getElementById("activities-container");
 
   activities.forEach(act => {
-    console.log("Activity raw:", act);
+    console.log("Activity raw:", act); // Debugging
 
     const card = document.createElement("div");
     card.className = "card";
+
+    // Card header
+    const header = document.createElement("div");
+    header.className = "card-header";
+    const categoryIcon = getCategoryIcon(act.Category);
+    header.innerHTML = `<span>${categoryIcon} ${act.Activity || "—"}</span><span>${act.Time || "—"}</span>`;
+    card.appendChild(header);
+
+    // Card content
+    const content = document.createElement("div");
+    content.className = "card-content";
+
+    // Fields other than Notes
+    const fields = [
+      ["Category", act.Category],
+      ["Neighborhood", act.Neighborhood],
+      ["Address", act.Address],
+      ["Website", act.Website ? `<a href="${act.Website}" target="_blank">${act.Website}</a>` : "—"`],
+      ["Cost", act.Cost],
+      ["Ticket", act.Ticket],
+      ["Hours", act.Hours]
+    ];
+
+    fields.forEach(([label, value]) => {
+      const p = document.createElement("p");
+      if (label === "Website" && act.Website) {
+        // Already contains link HTML
+        p.innerHTML = `<strong>${label}:</strong> ${value}`;
+      } else {
+        p.innerHTML = `<strong>${label}:</strong> ${value || "—"}`;
+      }
+      content.appendChild(p);
+    });
+
+    // Notes - always safe using createTextNode
+    const notesPara = document.createElement("p");
+    const notesStrong = document.createElement("strong");
+    notesStrong.textContent = "Notes: ";
+    notesPara.appendChild(notesStrong);
+    notesPara.appendChild(document.createTextNode(act.Notes || "—"));
+    content.appendChild(notesPara);
+
+    card.appendChild(content);
+
+    // Expand/collapse
+    card.onclick = () => card.classList.toggle("expanded");
+
+    container.appendChild(card);
+  });
+}
+
 
     // Activity header
     const header = document.createElement("div");
