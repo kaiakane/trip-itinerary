@@ -129,12 +129,10 @@ async function populateActivities() {
 
     // Notes (if any)
     if (act.Notes?.trim()) {
-      let notesText = act.Notes.trim();
+      let notesText = act.Notes || "";
 
-      // Remove surrounding quotes if present
-      if (notesText.startsWith('"') && notesText.endsWith('"')) {
-        notesText = notesText.slice(1, -1).trim();
-      }
+      // Remove any surrounding quotes and trim whitespace
+      notesText = notesText.replace(/^"+|"+$/g, '').trim();
 
       if (notesText) {
         const notesPara = document.createElement("p");
@@ -160,6 +158,7 @@ async function populateActivities() {
     container.appendChild(card);
   });
 }
+
 
 // Updated category icons
 function getCategoryIcon(category) {
