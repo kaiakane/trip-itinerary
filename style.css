@@ -131,12 +131,19 @@ main {
 }
 /* Expanded content */
 .card-content {
+  display: none; /* hide by default */
   padding: 1rem;
   font-size: 0.95rem;
   line-height: 1.5;
   color: var(--text-light);
   background-color: #fff;
 }
+
+/* Show content when parent card has .expanded */
+.card.expanded .card-content {
+  display: block;
+}
+
 
 /* Mobile adjustments */
 @media (max-width: 600px) {
