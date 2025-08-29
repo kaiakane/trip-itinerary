@@ -123,7 +123,9 @@ async function populateActivities() {
     const notesStrong = document.createElement("strong");
     notesStrong.textContent = "Notes: ";
     notesPara.appendChild(notesStrong);
-    notesPara.appendChild(document.createTextNode(act.Notes || "—"));
+    const notesText = act.Notes?.trim();
+notesPara.appendChild(document.createTextNode(notesText ? notesText : "—"));
+
     content.appendChild(notesPara);
 
     card.appendChild(content);
