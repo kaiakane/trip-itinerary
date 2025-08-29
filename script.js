@@ -91,54 +91,67 @@ async function populateActivities() {
   const container = document.getElementById("activities-container");
 
   activities.forEach(act => {
-    console.log("Activity raw:", act);
-
+    // Create card
     const card = document.createElement("div");
-    card.className = "card";
+    card.className = "card"; // collapsed by default
 
     // Activity header
     const header = document.createElement("div");
     header.className = "card-header";
     const categoryIcon = getCategoryIcon(act.Category);
-    header.innerHTML = `<span>${categoryIcon} ${act.Activity || "—"}</span><span>${act.Time || "—"}</span>`;
+
+    header.innerHTML = `
+      <span>${categoryIcon} ${act.Activity || ""}</span>
+      <span class="time">${act.Time || ""}</span>
+    `;
     card.appendChild(header);
 
-    // Expanded content
+    // Expanded content container
     const content = document.createElement("div");
     content.className = "card-content";
 
-    content.innerHTML = `
-      <p><strong>Category:</strong> ${act.Category || "—"}</p>
-      <p><strong>Neighborhood:</strong> ${act.Neighborhood || "—"}</p>
-      <p><strong>Address:</strong> ${act.Address || "—"}</p>
-      <p><strong>Website:</strong> ${
-        act.Website ? `<a href="${act.Website}" target="_blank">${act.Website}</a>` : "—"
-      }</p>
-      <p><strong>Cost:</strong> ${act.Cost || "—"}</p>
-      <p><strong>Ticket:</strong> ${act.Ticket || "—"}</p>
-      <p><strong>Hours:</strong> ${act.Hours || "—"}</p>
-    `;
+    // Fields to display if non-empty
+    const fields = ["Category", "Neighborhood", "Address", "Website", "Cost", "Ticket", "Hours"];
+    fields.forEach(field => {
+      const value = act[field]?.trim();
+      if (value && value !== "—") { // skip empty or placeholder
+        const p = document.createElement("p");
 
-    // Notes: safe text node append
-    const notesPara = document.createElement("p");
-    const notesStrong = document.createElement("strong");
-    notesStrong.textContent = "Notes: ";
-    notesPara.appendChild(notesStrong);
-    const notesText = act.Notes?.trim();
-notesPara.appendChild(document.createTextNode(notesText ? notesText : "—"));
-notesPara.classList.add("notes");
-    content.appendChild(notesPara);
+        if (field === "Website") {
+          p.innerHTML = `<strong>${field}:</strong> <a href="${value}" target="_blank">${value}</a>`;
+        } else {
+          p.innerHTML = `<strong>${field}:</strong> ${value}`;
+        }
+
+        content.appendChild(p);
+      }
+    });
+
+    // Notes (if any)
+    if (act.Notes?.trim()) {
+      const notesPara = document.createElement("p");
+      notesPara.classList.add("notes");
+
+      const notesStrong = document.createElement("strong");
+      notesStrong.textContent = "Notes: ";
+      notesPara.appendChild(notesStrong);
+
+      notesPara.appendChild(document.createTextNode(act.Notes.trim()));
+      content.appendChild(notesPara);
+    }
 
     card.appendChild(content);
 
-    // Toggle expanded state
-    card.onclick = (e) => {
-  if (e.target.tagName.toLowerCase() === "a") return; // let link work
-  card.classList.toggle("expanded");
-};
+    // Toggle expanded state on header click only
+    header.onclick = (e) => {
+      if (e.target.tagName.toLowerCase() === "a") return; // links still work
+      card.classList.toggle("expanded");
+    };
+
     container.appendChild(card);
   });
 }
+
 
 
 // Updated category icons
