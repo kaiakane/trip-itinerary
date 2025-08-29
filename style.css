@@ -85,16 +85,23 @@ main {
   font-weight: 600;
   padding: 1.2rem 1rem;
   border-radius: 16px;
-  color: #fff; /* KEEP text always visible */
+  color: #fff !important; /* force text visible */
   background: var(--blue);
   box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.day-card * {
+  color: #fff !important;  /* ensure child elements visible */
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .day-card:hover {
   background: var(--orange);
-  color: #fff; /* text still white on hover */
+  color: #fff !important;
 }
-
 
 /* Activity card styling */
 .card {
