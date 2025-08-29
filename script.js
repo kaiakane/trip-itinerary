@@ -6,9 +6,10 @@ const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSt2MSaQY53H0kBw
 function parseCSV(csvText) {
   const lines = csvText.split("\n").filter(line => line.trim() !== "");
   const headers = lines
-    .shift()
-    .split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)
-    .map(h => h.replace(/^"|"$/g, ''));
+  .shift()
+  .split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)
+  .map(h => h.replace(/^"|"$/g, '').trim()); // <- trim spaces here
+
 
   return lines.map(line => {
     let values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); // split by commas outside quotes
