@@ -112,14 +112,14 @@ main {
   }
 }
 
-
-/* Activity card styling */
+/* ---------- Activity Card Styling ---------- */
 .card {
   background-color: var(--card-bg);
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   transition: transform 0.2s, box-shadow 0.2s;
   overflow: hidden;
+  margin-bottom: 1rem;
 }
 
 .card:hover {
@@ -127,49 +127,74 @@ main {
   box-shadow: 0 6px 18px rgba(0,0,0,0.12);
 }
 
-/* Header inside activity cards */
+/* Card header */
 .card-header {
-  display: flex; /* ADD THIS */
+  display: flex;
+  justify-content: space-between;
   font-family: 'Baloo 2', cursive;
   font-size: 1.2rem;
   font-weight: 600;
   padding: 0.75rem 1rem;
   background-color: var(--green);
   color: #fff;
+  cursor: pointer;
+  flex-wrap: wrap;
 }
+
+/* Separate activity name and time */
 .card-header span {
   flex: 1;
 }
-
 .card-header .time {
   margin-left: 0.75rem;
   font-weight: 400;
   color: #fefefe;
+  text-align: right;
 }
+
 /* Expanded content */
 .card-content {
-  display: none; /* hide by default */
-  padding: 1rem;
+  display: none;
+  padding: 0.75rem 1rem; /* slightly smaller padding to tighten spacing */
   font-size: 0.95rem;
-  line-height: 1.5;
+  line-height: 1.4; /* tighter line spacing */
   color: var(--text-light);
   background-color: #fff;
+  border-top: 1px solid rgba(0,0,0,0.05); /* subtle separation from header */
 }
 
-/* Show content when parent card has .expanded */
+/* Show content when expanded */
 .card.expanded .card-content {
   display: block;
+  animation: fadeIn 0.25s ease-in-out;
 }
 
+/* Paragraph spacing */
+.card-content p {
+  margin: 0.25rem 0; /* reduced vertical spacing */
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* Notes alignment */
+.card-content p.notes {
+  justify-content: flex-start;
+  padding-left: 0;
+}
+
+/* Links styling */
+.card-content a {
+  color: var(--orange);
+  text-decoration: none;
+  font-weight: bold;
+}
+.card-content a:hover {
+  text-decoration: underline;
+}
 
 /* Mobile adjustments */
 @media (max-width: 600px) {
-  main {
-    padding: 0.5rem;
-  }
-  header h1 {
-    font-size: 1.5rem;
-  }
   .card-header {
     flex-direction: column;
     align-items: flex-start;
@@ -179,57 +204,7 @@ main {
     flex-direction: column;
     align-items: flex-start;
   }
+  .card-content {
+    padding: 0.6rem 0.8rem;
+  }
 }
-/* Preserve line breaks and wrap long text for notes and other fields */
-.card-content p {
-  white-space: pre-wrap;   /* Preserve line breaks from CSV */
-  word-wrap: break-word;   /* Wrap long words instead of overflowing */
-  overflow-wrap: break-word;
-}
-
-/* Optional: add a subtle max-height with scroll for very long notes */
-.card-content {
-  max-height: 1000px; /* high enough not to clip most notes */
-}
-
-/* Optional: make links stand out */
-.card-content a {
-  color: #ff7f50;
-  text-decoration: underline;
-}
-
-/* Small padding tweak for readability */
-.card-content p strong {
-  margin-right: 0.3rem;
-}
-/* Container for activity cards */
-#activities-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem; /* vertical spacing between activity cards */
-}
-
-.card-content {
-  display: none; /* default hidden */
-  padding: 1rem;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: var(--text-light);
-  background-color: #fff;
-}
-.card.open .card-content {
-  display: block; /* visible when parent has .open */
-}
-
-.card-content p {
-  margin: 0.3rem 0;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.card-content p.notes {
-  justify-content: space-between; /* match other lines */
-  padding-left: 0; /* remove misalignment */
-}
-
