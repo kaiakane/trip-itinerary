@@ -9,7 +9,7 @@ body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(160deg, #ffe8d6, #ffd3b6);
+  background: linear-gradient(160deg, #ffd9b6, #ffb380);
   color: #333;
 }
 
@@ -69,7 +69,20 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  background: linear-gradient(120deg, #ffd3b6, #ffbb88); /* orange gradient like activity headers */
+  border-radius: 12px;
+  color: #222;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
+
+.day-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
 
 /* Activity card styling */
 .card-header {
@@ -297,4 +310,7 @@ main {
 
 .card-content a:hover {
   text-decoration: underline;
+}
+.card-content p.notes {
+  padding-left: 0.5rem; /* same as other paragraphs if needed */
 }
