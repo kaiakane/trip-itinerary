@@ -71,7 +71,7 @@ main {
   justify-content: space-between;
   font-weight: 700;
   font-size: 1.1rem;
-  gap: 0.5rem;
+  gap: 1rem;
   flex-wrap: wrap;
   overflow-wrap: break-word;
 }
