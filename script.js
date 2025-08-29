@@ -1,6 +1,8 @@
+
+
 const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSt2MSaQY53H0kBw0MRlgJVFE8FG-A0tMBmccKoGPBqvllIA_Mn4B45QQWYu5uZu2_-CZbfifKyOQjl/pub?output=csv";
 
-// CSV parser that aligns with headers, even if cells are missing
+// CSV parser that always aligns with headers, even if cells are missing
 function parseCSV(csvText) {
   const lines = csvText.split("\n").filter(line => line.trim() !== "");
   const headers = lines
@@ -9,11 +11,15 @@ function parseCSV(csvText) {
     .map(h => h.replace(/^"|"$/g, ''));
 
   return lines.map(line => {
-    let values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+    let values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); // split by commas outside quotes
     values = values.map(v => v.replace(/^"|"$/g, '').trim());
 
-    while (values.length < headers.length) values.push("");
+    // Pad with blanks if not enough values
+    while (values.length < headers.length) {
+      values.push("");
+    }
 
+    // If too many values, merge extras into Notes (last column)
     if (values.length > headers.length) {
       values = values
         .slice(0, headers.length - 1)
@@ -21,12 +27,14 @@ function parseCSV(csvText) {
     }
 
     const obj = {};
-    headers.forEach((h, i) => obj[h] = values[i] || "");
+    headers.forEach((h, i) => {
+      obj[h] = values[i] || "";
+    });
     return obj;
   });
 }
 
-// Combine Day + Date for homepage
+// Concatenate Day and Date for homepage
 function formatHomePageDate(day, date) {
   if (!day && !date) return "";
   if (!day) return date;
@@ -34,12 +42,13 @@ function formatHomePageDate(day, date) {
   return `${day}, ${date}`;
 }
 
-// Get URL query parameter
+// Get query param
 function getQueryParam(param) {
-  return new URLSearchParams(window.location.search).get(param);
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
 }
 
-// Populate homepage with day cards
+// Populate homepage
 async function populateDays() {
   const res = await fetch(csvUrl);
   const text = await res.text();
@@ -47,6 +56,7 @@ async function populateDays() {
 
   const daysContainer = document.getElementById("days-container");
 
+  // Unique Day + Date combinations
   const uniqueDays = Array.from(
     new Map(data.map(d => [`${d.Day}|${d.Date}`, d])).values()
   );
@@ -55,14 +65,15 @@ async function populateDays() {
     const card = document.createElement("div");
     card.className = "card day-card";
     card.innerText = formatHomePageDate(dayData.Day, dayData.Date);
-    card.onclick = () => {
-      window.location = `day.html?day=${encodeURIComponent(dayData.Day)}&date=${encodeURIComponent(dayData.Date)}`;
-    };
+    card.onclick = () =>
+      (window.location = `day.html?day=${encodeURIComponent(
+        dayData.Day
+      )}&date=${encodeURIComponent(dayData.Date)}`);
     daysContainer.appendChild(card);
   });
 }
 
-// Populate activity cards for a specific day
+// Populate activities for a specific day
 async function populateActivities() {
   const res = await fetch(csvUrl);
   const text = await res.text();
@@ -84,39 +95,30 @@ async function populateActivities() {
     const card = document.createElement("div");
     card.className = "card";
 
-    // Header
+    // Activity header
     const header = document.createElement("div");
     header.className = "card-header";
     const categoryIcon = getCategoryIcon(act.Category);
     header.innerHTML = `<span>${categoryIcon} ${act.Activity || "—"}</span><span>${act.Time || "—"}</span>`;
     card.appendChild(header);
 
-    // Content
+    // Expanded content
     const content = document.createElement("div");
     content.className = "card-content";
 
-    // All fields except Notes
-    const fields = [
-      ["Category", act.Category],
-      ["Neighborhood", act.Neighborhood],
-      ["Address", act.Address],
-      ["Website", act.Website ? `<a href="${act.Website}" target="_blank">${act.Website}</a>` : "—"`],
-      ["Cost", act.Cost],
-      ["Ticket", act.Ticket],
-      ["Hours", act.Hours]
-    ];
+    content.innerHTML = `
+      <p><strong>Category:</strong> ${act.Category || "—"}</p>
+      <p><strong>Neighborhood:</strong> ${act.Neighborhood || "—"}</p>
+      <p><strong>Address:</strong> ${act.Address || "—"}</p>
+      <p><strong>Website:</strong> ${
+        act.Website ? `<a href="${act.Website}" target="_blank">${act.Website}</a>` : "—"
+      }</p>
+      <p><strong>Cost:</strong> ${act.Cost || "—"}</p>
+      <p><strong>Ticket:</strong> ${act.Ticket || "—"}</p>
+      <p><strong>Hours:</strong> ${act.Hours || "—"}</p>
+    `;
 
-    fields.forEach(([label, value]) => {
-      const p = document.createElement("p");
-      if (label === "Website" && act.Website) {
-        p.innerHTML = `<strong>${label}:</strong> ${value}`;
-      } else {
-        p.innerHTML = `<strong>${label}:</strong> ${value || "—"}`;
-      }
-      content.appendChild(p);
-    });
-
-    // Notes safely
+    // Notes: safe text node append
     const notesPara = document.createElement("p");
     const notesStrong = document.createElement("strong");
     notesStrong.textContent = "Notes: ";
@@ -126,29 +128,38 @@ async function populateActivities() {
 
     card.appendChild(content);
 
-    // Expand/collapse
+    // Toggle expanded state
     card.onclick = () => card.classList.toggle("expanded");
-
     container.appendChild(card);
   });
 }
 
-// Category icons
+
+// Updated category icons
 function getCategoryIcon(category) {
   switch (category?.toLowerCase()) {
-    case "explore": return "🌍";
-    case "activity": return "⚡";
-    case "shopping": return "🛍️";
-    case "museum": return "🏛️";
-    case "food": return "🍴";
-    case "travel": return "✈️";
-    case "lodging": return "🏨";
-    case "to-do": return "✅";
-    default: return "📍";
+    case "explore":
+      return "🌍";
+    case "activity":
+      return "⚡";
+    case "shopping":
+      return "🛍️";
+    case "museum":
+      return "🏛️";
+    case "food":
+      return "🍴";
+    case "travel":
+      return "✈️";
+    case "lodging":
+      return "🏨";
+    case "to-do":
+      return "✅";
+    default:
+      return "📍";
   }
 }
 
-// Detect page
+// Determine which page
 if (document.getElementById("days-container")) {
   populateDays();
 } else if (document.getElementById("activities-container")) {
