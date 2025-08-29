@@ -1,4 +1,5 @@
 
+
 /* Fonts */
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
@@ -239,11 +240,10 @@ main {
 
 /* Card content paragraphs */
 .card-content p {
-   margin: 0.3rem 0;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+  margin: 0.3rem 0;
+  white-space: pre-wrap;   /* preserve line breaks from CSV */
+  word-wrap: break-word;   /* wrap long words */
   overflow-wrap: break-word;
-  display: block; /* important to avoid flex hiding Notes */
 }
 
 /* Strong labels inside card content */
