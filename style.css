@@ -63,6 +63,11 @@ main {
   text-align: center;
   font-weight: 700;
   font-size: 1.2rem;
+  padding: 1.2rem 1rem;
+  min-height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Activity card styling */
