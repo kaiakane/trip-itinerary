@@ -91,9 +91,9 @@ async function populateActivities() {
   const container = document.getElementById("activities-container");
 
   activities.forEach(act => {
-    // Create card
+    // Create card (collapsed by default)
     const card = document.createElement("div");
-    card.className = "card"; // collapsed by default
+    card.className = "card";
 
     // Activity header
     const header = document.createElement("div");
@@ -129,15 +129,24 @@ async function populateActivities() {
 
     // Notes (if any)
     if (act.Notes?.trim()) {
-      const notesPara = document.createElement("p");
-      notesPara.classList.add("notes");
+      let notesText = act.Notes.trim();
 
-      const notesStrong = document.createElement("strong");
-      notesStrong.textContent = "Notes: ";
-      notesPara.appendChild(notesStrong);
+      // Remove surrounding quotes if present
+      if (notesText.startsWith('"') && notesText.endsWith('"')) {
+        notesText = notesText.slice(1, -1).trim();
+      }
 
-      notesPara.appendChild(document.createTextNode(act.Notes.trim()));
-      content.appendChild(notesPara);
+      if (notesText) {
+        const notesPara = document.createElement("p");
+        notesPara.classList.add("notes");
+
+        const notesStrong = document.createElement("strong");
+        notesStrong.textContent = "Notes: ";
+        notesPara.appendChild(notesStrong);
+
+        notesPara.appendChild(document.createTextNode(notesText));
+        content.appendChild(notesPara);
+      }
     }
 
     card.appendChild(content);
@@ -151,8 +160,6 @@ async function populateActivities() {
     container.appendChild(card);
   });
 }
-
-
 
 // Updated category icons
 function getCategoryIcon(category) {
