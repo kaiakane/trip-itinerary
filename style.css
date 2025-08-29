@@ -85,15 +85,14 @@ main {
   font-weight: 600;
   padding: 1.2rem 1rem;
   border-radius: 16px;
-  color: #fff; /* keep text white */
+  color: #fff; /* KEEP text always visible */
   background: var(--blue);
   box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
 .day-card:hover {
   background: var(--orange);
-  color: #fff; /* keep text visible */
+  color: #fff; /* text still white on hover */
 }
 
 
@@ -113,6 +112,7 @@ main {
 
 /* Header inside activity cards */
 .card-header {
+  display: flex; /* ADD THIS */
   font-family: 'Baloo 2', cursive;
   font-size: 1.2rem;
   font-weight: 600;
@@ -184,9 +184,19 @@ main {
   flex-direction: column;
   gap: 1.5rem; /* vertical spacing between activity cards */
 }
-.card-content p.notes {
-  padding-left: 0.5rem; /* same as other paragraphs if needed */
+
+.card-content {
+  display: none; /* default hidden */
+  padding: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-light);
+  background-color: #fff;
 }
+.card.open .card-content {
+  display: block; /* visible when parent has .open */
+}
+
 .card-content p {
   margin: 0.3rem 0;
   display: flex;
@@ -195,6 +205,7 @@ main {
 }
 
 .card-content p.notes {
-  justify-content: flex-start; /* align with other labels */
-  padding-left: 0; /* remove odd indent */
+  justify-content: space-between; /* match other lines */
+  padding-left: 0; /* remove misalignment */
 }
+
