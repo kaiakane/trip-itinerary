@@ -78,29 +78,40 @@ main {
 }
 
 /* Day card styling */
+/* ---------- Homepage Day Cards ---------- */
 .day-card {
   text-align: center;
   font-family: 'Baloo 2', cursive;
-  font-size: 1.3rem;
+  font-size: 1.3rem;        /* desktop size */
   font-weight: 600;
-  padding: 1.2rem 1rem;
+  padding: 1.5rem 1rem;     /* larger clickable area */
   border-radius: 16px;
-  color: #fff !important; /* force text visible */
-  background: var(--blue);
+  color: #fff;               /* always visible text */
+  background: var(--blue);   /* default background */
   box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s; /* subtle lift on tap */
 }
 
-.day-card * {
-  color: #fff !important;  /* ensure child elements visible */
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
+/* Keep a small lift effect on click/hover (optional) */
 .day-card:hover {
-  background: var(--orange);
-  color: #fff !important;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  /* NO background or color change — text always visible */
+}
+
+/* Ensure all child elements inherit visible text */
+.day-card, 
+.day-card * {
+  color: #fff;
+}
+
+/* Mobile tweaks */
+@media (max-width: 600px) {
+  .day-card {
+    font-size: 1.5rem;
+    padding: 1.8rem 1rem;
+  }
 }
 
 /* Activity card styling */
