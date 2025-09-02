@@ -50,7 +50,7 @@ main {
 }
 
 .button, .back-button, .link {
-  background-color: var(--blue);
+  background-color: #77b8ed;
   color: #fff;
   border: none;
   border-radius: 8px;
