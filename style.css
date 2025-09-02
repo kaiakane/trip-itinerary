@@ -127,9 +127,9 @@ main {
 
 .card {
   background: #fff;
-  border: 1px solid #e6e6e6;            /* thin outline */
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06); /* soft shadow */
+  border: 1px solid rgba(0,0,0,0.1);            /* thin outline */
+  border-radius: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
   transition: transform 0.2s, box-shadow 0.2s;
   overflow: hidden;
 }
