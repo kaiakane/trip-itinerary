@@ -1,15 +1,15 @@
 
 
+
 /* Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=Karla:wght@300;400;600&display=swap');
 
 :root {
-  --blue: #123456;
-  --orange: #8A3324;
-  --yellow: #ED9121;
-  --green: #4A5D23;
-  --pink: #A865B5;
-  --purple: #D8BFD8;
+  --blue: #4A90E2;
+  --orange: #FF7F50;
+  --yellow: #FFD700;
+  --green: #7ED957;
+  --pink: #FF4C91;
   --light-bg: #FAFAFA;
   --card-bg: #FFFFFF;
   --text-dark: #333333;
@@ -33,7 +33,7 @@ header {
 header h1 {
   display: inline-block;
   padding: 0.75rem 1.25rem;
-   background: linear-gradient(135deg, var(--pink), var(--purple));
+  background: var(--pink);
   color: #fff;
   border-radius: 12px;
   font-family: 'Baloo 2', cursive;
@@ -91,16 +91,10 @@ main {
   padding: 1.5rem 1rem;
   border-radius: 16px;
   color: #fff;               /* always visible text */
+  background: linear-gradient(135deg, var(--yellow), var(--orange)) !important;   /* override generic .card rules */
   box-shadow: 0 6px 12px rgba(0,0,0,0.15) !important;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
-}
-.card.day-card:nth-child(odd) {
-  background-color: var(--orange);
-}
-
-.card.day-card:nth-child(even) {
-  background-color: var(--yellow);
 }
 
 .card.day-card:hover {
@@ -127,9 +121,9 @@ main {
 
 .card {
   background: #fff;
-  border: 1px solid rgba(0,0,0,0.1);            /* thin outline */
+  border: 1px solid #e6e6e6;            /* thin outline */
   border-radius: 16px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06); /* soft shadow */
   transition: transform 0.2s, box-shadow 0.2s;
   overflow: hidden;
 }
