@@ -175,6 +175,8 @@ function getCategoryIcon(category) {
       return "🍴";
     case "travel":
       return "🚂";
+    case "airport":
+      return "✈️";
     case "lodging":
       return "🏠";
     case "to-do":
