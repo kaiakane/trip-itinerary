@@ -145,6 +145,7 @@ main {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+  font-weight: 700;
   padding: 0.75rem 1rem;
   background: linear-gradient(135deg, var(--blue), var(--green));
   color: #fff;
@@ -154,7 +155,7 @@ main {
 .card-header span { flex: 1; }
 .card-header .time {
   margin-left: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   text-align: right;
   color: #fefefe;
 }
