@@ -116,113 +116,89 @@ main {
 }
 
 /* ---------- Activity Card Styling ---------- */
+
 .card {
-/* Activity card styling */
-.card {
-  background-color: var(--card-bg); /* keep the subtle background */
-  border: 1px solid #e0e0e0;       /* thin light gray outline */
+  background: #fff;
+  border: 1px solid #e6e6e6;            /* thin outline */
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* soft shadow for depth */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06); /* soft shadow */
   transition: transform 0.2s, box-shadow 0.2s;
   overflow: hidden;
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.10);
 }
 
-/* Gradient header */
+/* Header: gradient + clearly clickable */
 .card-header {
   display: flex;
-  font-family: 'Baloo 2', cursive;
-  font-size: 1.2rem;
-  font-weight: 600;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
   padding: 0.75rem 1rem;
   background: linear-gradient(135deg, var(--green), var(--blue));
   color: #fff;
-}
-.card-header span {
-  flex: 1;
+  cursor: pointer; /* IMPORTANT: so users know it's tappable */
 }
 
+.card-header span { flex: 1; }
 .card-header .time {
   margin-left: 0.75rem;
   font-weight: 400;
-  color: #fefefe;
-}
-
-
-/* Separate activity name and time */
-.card-header span {
-  flex: 1;
-}
-.card-header .time {
-  margin-left: 0.75rem;
-  font-weight: 400;
-  color: #fefefe;
   text-align: right;
+  color: #fefefe;
 }
 
-/* Expanded content */
+/* Collapsed by default */
 .card-content {
-  display: none;
-  padding: 0.75rem 1rem; /* slightly smaller padding to tighten spacing */
+  display: none;                 /* IMPORTANT */
+  padding: 0.75rem 1rem;
   font-size: 0.95rem;
-  line-height: 1.4; /* tighter line spacing */
+  line-height: 1.4;
   color: var(--text-light);
-  background-color: #fff;
-  border-top: 1px solid rgba(0,0,0,0.05); /* subtle separation from header */
+  background: #fff;
+  border-top: 1px solid rgba(0,0,0,0.05); /* subtle divider from header */
 }
 
 /* Show content when expanded */
 .card.expanded .card-content {
-  display: block;
-  animation: fadeIn 0.25s ease-in-out;
+  display: block; /* IMPORTANT */
 }
 
-/* Paragraph spacing */
+/* Tight, tidy rows */
 .card-content p {
-  margin: 0.25rem 0; /* reduced vertical spacing */
+  margin: 0.25rem 0;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
-/* Notes alignment */
+/* Notes block can flow full width */
 .card-content p.notes {
-  justify-content: flex-start;
-  padding-left: 0;
+  display: block;
+  margin-top: 0.4rem;
 }
 
-/* Links styling */
+/* Links */
 .card-content a {
   color: var(--orange);
+  font-weight: 600;
   text-decoration: none;
-  font-weight: bold;
 }
-.card-content a:hover {
-  text-decoration: underline;
-}
+.card-content a:hover { text-decoration: underline; }
 
-/* Mobile adjustments */
-@media (max-width: 600px) {
-  .card-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.2rem;
-  }
-  .card-content p {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .card-content {
-    padding: 0.6rem 0.8rem;
-  }
-}
-/* Container for activity cards */
+/* Spacing between cards */
 #activities-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem; /* vertical spacing between activity cards */
+  gap: 2.5rem;
+}
+
+/* Mobile tweaks */
+@media (max-width: 600px) {
+  .card-header { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+  .card-content p { flex-direction: column; align-items: flex-start; }
+  .card-content { padding: 0.6rem 0.9rem; }
 }
