@@ -117,12 +117,14 @@ main {
 
 /* ---------- Activity Card Styling ---------- */
 .card {
-  background-color: #fff; /* white body */
+/* Activity card styling */
+.card {
+  background-color: var(--card-bg); /* keep the subtle background */
+  border: 1px solid #e0e0e0;       /* thin light gray outline */
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* soft shadow instead of border */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* soft shadow for depth */
   transition: transform 0.2s, box-shadow 0.2s;
   overflow: hidden;
-  border: none; /* remove thick border */
 }
 
 .card:hover {
