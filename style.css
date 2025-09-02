@@ -9,7 +9,7 @@
   --yellow: #ED9121;
   --green: #4A5D23;
   --pink: #A865B5;
-  --purple: #D8BFD8
+  --purple: #D8BFD8;
   --light-bg: #FAFAFA;
   --card-bg: #FFFFFF;
   --text-dark: #333333;
@@ -33,7 +33,7 @@ header {
 header h1 {
   display: inline-block;
   padding: 0.75rem 1.25rem;
-   background: linear-gradient(48deg, var(--pink), var(--purple);
+   background: linear-gradient(135deg, var(--pink), var(--purple);
   color: #fff;
   border-radius: 12px;
   font-family: 'Baloo 2', cursive;
@@ -91,7 +91,7 @@ main {
   padding: 1.5rem 1rem;
   border-radius: 16px;
   color: #fff;               /* always visible text */
-  background: linear-gradient(48deg, var(--yellow), var(--orange)) !important;   /* override generic .card rules */
+  background: linear-gradient(135deg, var(--yellow), var(--orange)) !important;   /* override generic .card rules */
   box-shadow: 0 6px 12px rgba(0,0,0,0.15) !important;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
