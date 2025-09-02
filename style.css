@@ -222,5 +222,5 @@ main {
 #activities-container {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem; /* vertical spacing between activity cards */
+  gap: 1.5rem; /* vertical spacing between activity cards */
 }
