@@ -218,3 +218,9 @@ main {
     padding: 0.6rem 0.8rem;
   }
 }
+/* Container for activity cards */
+#activities-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* vertical spacing between activity cards */
+}
