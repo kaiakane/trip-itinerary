@@ -92,12 +92,17 @@ main {
   padding: 1.5rem 1rem;
   border-radius: 16px;
   color: #fff;               /* always visible text */
-  background-color: var(--blue) !important;   /* override generic .card rules */
   box-shadow: 0 6px 12px rgba(0,0,0,0.15) !important;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
 }
+.card.day-card:nth-child(odd) {
+  background-color: var(--blue);
+}
 
+.card.day-card:nth-child(even) {
+  background-color: var(--green);
+}
 .card.day-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 16px rgba(0,0,0,0.2);
@@ -141,7 +146,7 @@ main {
   justify-content: space-between;
   flex-wrap: wrap;
   padding: 0.75rem 1rem;
-  background: linear-gradient(135deg, var(--green), var(--pink));
+  background: linear-gradient(135deg, var(--pink), var(--orange));
   color: #fff;
   cursor: pointer; /* IMPORTANT: so users know it's tappable */
 }
