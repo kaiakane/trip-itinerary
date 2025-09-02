@@ -34,7 +34,7 @@ header {
 header h1 {
   display: inline-block;
   padding: 0.75rem 1.25rem;
-  background: var(--green);
+  background: var(--purple);
   color: #fff;
   border-radius: 12px;
   font-family: 'Baloo 2', cursive;
@@ -50,7 +50,7 @@ main {
 }
 
 .button, .back-button, .link {
-  background-color: var(--green);
+  background-color: var(--purple);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -97,11 +97,11 @@ main {
   transition: transform 0.2s, box-shadow 0.2s;
 }
 .card.day-card:nth-child(odd) {
-  background-color: var(--pink);
+  background-color: var(--blue);
 }
 
 .card.day-card:nth-child(even) {
-  background-color: var(--orange);
+  background-color: var(--green);
 }
 .card.day-card:hover {
   transform: translateY(-3px);
@@ -146,7 +146,7 @@ main {
   justify-content: space-between;
   flex-wrap: wrap;
   padding: 0.75rem 1rem;
-  background: linear-gradient(135deg, var(--blue), var(--purple));
+  background: linear-gradient(135deg, var(--pink), var(--orange));
   color: #fff;
   cursor: pointer; /* IMPORTANT: so users know it's tappable */
 }
