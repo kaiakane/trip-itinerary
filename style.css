@@ -117,32 +117,39 @@ main {
 
 /* ---------- Activity Card Styling ---------- */
 .card {
-  background-color: var(--card-bg);
+  background-color: #fff; /* white body */
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* soft shadow instead of border */
   transition: transform 0.2s, box-shadow 0.2s;
   overflow: hidden;
-  margin-bottom: 1rem;
+  border: none; /* remove thick border */
 }
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 }
 
-/* Card header */
+/* Gradient header */
 .card-header {
   display: flex;
-  justify-content: space-between;
   font-family: 'Baloo 2', cursive;
   font-size: 1.2rem;
   font-weight: 600;
   padding: 0.75rem 1rem;
-  background-color: var(--green);
+  background: linear-gradient(135deg, var(--green), var(--blue));
   color: #fff;
-  cursor: pointer;
-  flex-wrap: wrap;
 }
+.card-header span {
+  flex: 1;
+}
+
+.card-header .time {
+  margin-left: 0.75rem;
+  font-weight: 400;
+  color: #fefefe;
+}
+
 
 /* Separate activity name and time */
 .card-header span {
