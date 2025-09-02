@@ -65,7 +65,7 @@ main {
 }
 
 .button:hover, .back-button:hover, .link:hover {
-  background-color: var(--orange);
+  background-color: #fc927c;
 }
 
 /* Cards */
