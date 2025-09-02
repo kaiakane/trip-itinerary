@@ -155,6 +155,7 @@ main {
 .card-header span { flex: 1; }
 .card-header .time {
   margin-left: 0.75rem;
+  font-size: 1.3rem;
   font-weight: 700;
   text-align: right;
   color: #fefefe;
