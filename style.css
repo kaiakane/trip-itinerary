@@ -5,12 +5,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=Karla:wght@300;400;600&display=swap');
 
 :root {
-  --blue: #4A90E2;
-  --orange: #FF7F50;
+  --blue: #A3CEF1;
+  --orange: #FFD1BA;
   --yellow: #FFD700;
-  --green: #7ED957;
-  --pink: #FBA0E3;
-  --purple: #CEA2FD;
+  --green: #B8F2E6;
+  --pink: #FFB8A9;
+  --purple: #C9B8FF;
   --light-bg: #FAFAFA;
   --card-bg: #FFFFFF;
   --text-dark: #333333;
