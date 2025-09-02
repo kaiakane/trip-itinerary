@@ -90,7 +90,7 @@ main {
   padding: 1.5rem 1rem;
   border-radius: 16px;
   color: #fff;               /* always visible text */
-  background: linear-gradient(135deg, var(--yellow), var(--orange)) !important;   /* override generic .card rules */
+  background: linear-gradient(48deg, var(--yellow), var(--orange)) !important;   /* override generic .card rules */
   box-shadow: 0 6px 12px rgba(0,0,0,0.15) !important;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
