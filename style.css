@@ -191,7 +191,7 @@ main {
 
 /* Links */
 .card-content a {
-  color: var(--orange);
+  color: #fc927c;
   font-weight: 600;
   text-decoration: none;
 }
