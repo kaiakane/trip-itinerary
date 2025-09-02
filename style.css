@@ -145,8 +145,8 @@ main {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 1.3rem;
+  font-weight: 900;
   padding: 0.75rem 1rem;
   background: linear-gradient(135deg, var(--blue), var(--green));
   color: #fff;
