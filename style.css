@@ -11,6 +11,7 @@
   --green: #B8F2E6;
   --pink: #FFB8A9;
   --purple: #C9B8FF;
+  --magenta: #f73be1;
   --light-bg: #FAFAFA;
   --card-bg: #FFFFFF;
   --text-dark: #333333;
@@ -190,6 +191,10 @@ main {
 .card-content p.notes {
   display: block;
   margin-top: 0.4rem;
+}
+.ticket-alert {
+  font-weight: 700;
+  color: var(--magenta);
 }
 
 /* Links */
