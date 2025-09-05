@@ -117,11 +117,17 @@ async function populateActivities() {
       if (value && value !== "—") { // skip empty or placeholder
         const p = document.createElement("p");
 
-        if (field === "Website") {
-          p.innerHTML = `<strong>${field}:</strong> <a href="${value}" target="_blank">${value}</a>`;
-        } else {
-          p.innerHTML = `<strong>${field}:</strong> ${value}`;
-        }
+      if (field === "Website") {
+  p.innerHTML = `<strong>${field}:</strong> <a href="${value}" target="_blank">${value}</a>`;
+} else if (field === "Ticket") {
+  let ticketClass = "";
+  if (["Need to book", "Buy there", "Need to buy"].includes(value)) {
+    ticketClass = "ticket-alert";
+  }
+  p.innerHTML = `<strong>${field}:</strong> <span class="${ticketClass}">${value}</span>`;
+} else {
+  p.innerHTML = `<strong>${field}:</strong> ${value}`;
+}
 
         content.appendChild(p);
       }
